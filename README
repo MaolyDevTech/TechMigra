@@ -15,3 +15,17 @@
 
   res.send({ soma: soma })
 }); */
+
+
+//Format - Body
+
+/*
+  {
+    "name": "Maoly Lara",
+    "username": "MaolyDevTech",
+    "email": "maoly@gmail.com",
+    "password": "12345",
+    "avatar": "https://avatars.githubusercontent.com/u/85379351?v=4",
+    "background": "https://imgur.com/t/background/uxLzJ4s"
+  }
+*/
