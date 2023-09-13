@@ -1,5 +1,5 @@
 const userService = require('../services/user.service');
-const mongoose = require ('mongoose');
+
 
 const create = async (req, res) => {
     const { name, username, email, password, avatar, background } = req.body;
@@ -39,25 +39,67 @@ const findAll = async (req, res) => {
         users,
     });
 
-}
+};
 
 const findById = async (req, res) => {
-    const id = req.params.id;
+    //const id = req.id;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    /*if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).send({ message: "Invalid id" });
-    }
+    }*/
 
-    const user = await userService.findByIdService(id);
+    const user = req.user;
+    //await userService.findByIdService(id);
 
-    if (!user) {
+    /*if (!user) {
         return res.status(400).send({ message: "User not found" });
-    }
+    }*/
 
-    res.status(200).send({
+    /*res.status(200).send({
         message: "User retrieved successfully",
         user,
+    });*/
+
+    res.send(user);
+};
+
+const update = async (req, res) => {
+    const { name, username, email, password, avatar, background } = req.body;
+    
+    if (!name && !username && !email && !password && !avatar && !background) {
+        res.status(400).send({ message: "Submit at least one field for update" })
+    }
+    
+    const {id, user} = req;
+    
+    /*if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).send({ message: "Invalid id" });
+    }*/
+
+    /*const user = await userService.findByIdService(id);*/
+
+    /*if (!user) {
+        return res.status(400).send({ message: "User not found" });
+    }*/
+
+    await userService.updateService(
+        id,
+        name,
+        username,
+        email,
+        password,
+        avatar,
+        background
+    );
+    
+    res.status(200).send({
+        message: "User updated successfully",
+        user,
     });
+
+
+
 }
 
-module.exports = { create, findAll, findById };
+
+module.exports = { create, findAll, findById, update };
